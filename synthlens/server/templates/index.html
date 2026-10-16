@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>synthlens — AI image detector</title>
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>synthlens</h1>
+    <p class="tag">no-ML forensic AI-image detection</p>
+  </header>
+
+  <section id="drop" class="drop">
+    <input type="file" id="file" accept="image/*" hidden />
+    <p>drop an image here or <label for="file">browse</label></p>
+    <p class="hint">JPEG, PNG, WebP — up to 25MB</p>
+  </section>
+
+  <section id="status" class="status hidden"></section>
+
+  <section id="result" class="hidden">
+    <div class="verdict">
+      <span id="verdict-label"></span>
+      <div class="meter"><div id="meter-fill"></div></div>
+      <span id="prob"></span>
+    </div>
+
+    <div id="thumbs" class="thumbs"></div>
+
+    <details open>
+      <summary>heuristic breakdown</summary>
+      <table id="heuristics">
+        <thead><tr><th>signal</th><th>score</th><th>weight</th><th>contrib</th><th>details</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </details>
+
+    <div id="viz" class="viz"></div>
+
+    <p class="caveat">Classical heuristics give a probabilistic hint, not proof. Heavily re-compressed or resized images can mislead.</p>
+  </section>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>

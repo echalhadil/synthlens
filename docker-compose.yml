@@ -1,0 +1,10 @@
+services:
+  synthlens:
+    build: .
+    image: synthlens
+    container_name: synthlens
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./samples:/samples:ro
+    command: ["uvicorn", "synthlens.server.app:app", "--host", "0.0.0.0", "--port", "8000"]
