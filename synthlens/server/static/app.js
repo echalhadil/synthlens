@@ -8,6 +8,7 @@ const prob = document.getElementById("prob");
 const thumbs = document.getElementById("thumbs");
 const tbody = document.querySelector("#heuristics tbody");
 const viz = document.getElementById("viz");
+const headerInfo = document.getElementById("header-info");
 
 function colorForVerdict(v) {
   if (v.startsWith("Likely Real")) return "var(--good)";
@@ -16,7 +17,38 @@ function colorForVerdict(v) {
 }
 
 function fmtDetails(d) {
-  return Object.entries(d).map(([k, v]) => `${k}=${v}`).join("  ");
+  return Object.entries(d)
+    .filter(([k]) => k !== "exif" && k !== "chunks")
+    .map(([k, v]) => `${k}=${v}`)
+    .join("  ");
+}
+
+function humanSize(n) {
+  if (!n) return "0 B";
+  const u = ["B", "KB", "MB", "GB"];
+  const i = Math.floor(Math.log(n) / Math.log(1024));
+  return `${(n / Math.pow(1024, i)).toFixed(i ? 1 : 0)} ${u[i]}`;
+}
+
+function kvTable(obj) {
+  const rows = Object.entries(obj).map(([k, v]) =>
+    `<tr><td class="k">${k}</td><td>${v}</td></tr>`).join("");
+  return `<table class="kvtable"><tbody>${rows}</tbody></table>`;
+}
+
+function renderHeader(meta) {
+  const d = meta.details;
+  let html = "";
+  html += `<div class="hrow"><span class="k">format</span><span class="v">${d.format}</span></div>`;
+  html += `<div class="hrow"><span class="k">dimensions</span><span class="v">${d.dimensions}</span></div>`;
+  html += `<div class="hrow"><span class="k">file size</span><span class="v">${humanSize(d.file_size)}</span></div>`;
+  const exif = d.exif || {};
+  const chunks = d.chunks || {};
+  html += `<div class="group">EXIF (${Object.keys(exif).length} tags)</div>`;
+  html += Object.keys(exif).length ? kvTable(exif) : `<div class="empty">no EXIF metadata</div>`;
+  html += `<div class="group">embedded chunks</div>`;
+  html += Object.keys(chunks).length ? kvTable(chunks) : `<div class="empty">no text chunks</div>`;
+  headerInfo.innerHTML = html;
 }
 
 async function upload(file) {
@@ -55,6 +87,8 @@ function render(data, file) {
   img.src = URL.createObjectURL(file);
   img.alt = "uploaded";
   thumbs.appendChild(img);
+
+  if (data.heuristics.metadata) renderHeader(data.heuristics.metadata);
 
   tbody.innerHTML = "";
   const entries = Object.entries(data.heuristics).sort(

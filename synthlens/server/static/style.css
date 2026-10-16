@@ -91,6 +91,16 @@ th { color: var(--muted); font-weight: 500; font-size: 12px; text-transform: upp
 td.details { color: var(--muted); font-size: 12px; font-family: ui-monospace, monospace; }
 
 .viz { margin-top: 24px; display: grid; gap: 14px; }
+
+.header-info { margin-top: 12px; }
+.header-info .hrow { display: flex; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.header-info .hrow .k { color: var(--muted); min-width: 130px; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+.header-info .hrow .v { font-family: ui-monospace, monospace; font-size: 13px; word-break: break-all; }
+.header-info .group { margin-top: 14px; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+.header-info .kvtable { width: 100%; border-collapse: collapse; margin-top: 6px; }
+.header-info .kvtable td { padding: 5px 6px; border-bottom: 1px solid var(--border); font-size: 13px; font-family: ui-monospace, monospace; vertical-align: top; }
+.header-info .kvtable td.k { color: var(--muted); width: 40%; word-break: break-word; }
+.header-info .empty { color: var(--muted); font-size: 13px; padding: 6px 0; }
 .viz .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
 .viz .card h4 { margin: 0 0 8px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
 .viz .card img { width: 100%; border-radius: 6px; }

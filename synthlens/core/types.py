@@ -52,6 +52,8 @@ def _jsonable(v):
         return float(v)
     if isinstance(v, (int, float, str, bool)):
         return v
+    if isinstance(v, dict):
+        return {str(k): _jsonable(x) for k, x in v.items()}
     if isinstance(v, (list, tuple)):
         return [_jsonable(x) for x in v]
     return str(v)
